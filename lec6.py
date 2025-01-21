@@ -29,5 +29,4 @@ def is_prime(n):
     for d in range(2, n):
         if n % d == 0:
             result = False
-            break
     return result
