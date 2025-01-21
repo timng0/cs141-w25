@@ -24,7 +24,7 @@ def is_prime(n):
     Output (bool): True if n is prime, False otherwise
     """
     if n == 1:
-        return False
+        result = False
     result = True
     for d in range(2, n):
         if n % d == 0:
