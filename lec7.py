@@ -31,4 +31,5 @@ def is_prime(n):
             break
     return result
 
+scores = [-4, 4, 3, -2, 5, -5, 2, 2]
 grocery = ["eggs", "bread", "bread", "eggs", "milk", [3, 4, 4, -5], []]
