@@ -25,5 +25,4 @@ for <item> in <list>:
     # do something with the item to create a new item
     <new_item> = ... <item> ...
     # add new item to list
-    <new_list> = <new_list> + [<new_item>]
-
+    <new_list>.append(<new_item>)
