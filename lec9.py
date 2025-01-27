@@ -23,5 +23,5 @@ for i in range(len(counts)):
 
 # iterating via enumeration: good
 for i, num in enumerate(counts):
-    print(i, counts[i])
+    print(i, num, i + 1)
 
