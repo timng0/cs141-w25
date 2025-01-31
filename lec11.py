@@ -24,6 +24,17 @@ def incr(a):
     one = 1
     return a + one
 
+def double(x):
+    """
+    Doubles the given number
+
+    Input:
+        x (int): a number
+
+    Output (None): Modifies x
+    """
+    x = 2 * x
+
 def plus(m, n):
     """
     Applies plus to m and n.
