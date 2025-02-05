@@ -8,6 +8,9 @@ Last class:
 Today:
     Midterm information
     More on dictionaries
+        Complexity
+        Sets
+        Structures
 """
 
 def count_all_words(words):
