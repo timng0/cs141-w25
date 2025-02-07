@@ -42,10 +42,3 @@ def dequeue(qu):
     Output: item at the front of the queue (Any)
     """
     return qu.pop(0)
-
-def to_string(qu):
-    s = "[Front]\n"
-    for item in qu:
-        s += str(item) + "\n"
-    s += "[Back]\n"
-    return s
