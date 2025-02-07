@@ -7,6 +7,7 @@ def create():
 
     Output: empty stack (Stack)
     """
+    return []
 
 def is_empty(st):
     """
@@ -16,6 +17,7 @@ def is_empty(st):
 
     Output: True if stack is empty, False otherwise (bool)
     """
+    return st == []
 
 def push(st, item):
     """
@@ -27,6 +29,7 @@ def push(st, item):
 
     Output: None
     """
+    st.append(item)
 
 def pop(st):
     """
@@ -37,3 +40,4 @@ def pop(st):
 
     Output: the item on the top of the stack (Any)
     """
+    return st.pop()
