@@ -6,9 +6,36 @@ Last class:
     Abstract data types
 
 Today:
-    Classes
+    Classes: what Python calls types
+    * object: a thing
+    * attributes: values associated with classes
+    * methods: functions associated with classes
 """
-import stack
+from stack import Stack
+
+class Student:
+    """
+    Representation of a student at a university
+    """
+    def __init__(self, name, cnetid, ucid):
+        """
+        Input:
+            name (str): full name for the student
+        """
+        self.name = name
+        self.institution = 'University of Chicago'
+        self.id_number = ucid
+        self.email = cnetid + '@uchicago.edu'
+
+    def get_cnetid(self):
+        """
+        Retrieve the CNetID for the student
+
+        Output (str): the CNetID
+        """
+        cnet = self.email.removesuffix('@uchicago.edu')
+        return cnet
+
 
 def matching_brackets(expr):
     """
@@ -19,7 +46,7 @@ def matching_brackets(expr):
 
     Output (bool): True if expression has matched brackets
     """
-    st = stack.create()
+    st = Stack()
 
     brackets = {
         '(': ')',
@@ -29,12 +56,12 @@ def matching_brackets(expr):
 
     for char in expr:
         if char in brackets:
-            stack.push(st, char)
+            st.push(char)
         elif char in brackets.values():
-            if stack.is_empty(st):
+            if st.is_empty():
                 return False
-            matching = stack.pop(st)
+            matching = st.pop()
             if brackets[matching] != char:
                 return False
-    return stack.is_empty(st)
+    return st.is_empty()
 

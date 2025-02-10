@@ -1,43 +1,31 @@
-def create():
-    """
-    Creates an empty stack.
+class Stack:
+    def __init__(self):
+        """
+        Creates an empty stack.
+        """
+        self.items = []
 
-    Input:
-        None
+    def is_empty(self):
+        """
+        Determine whether the given stack is empty
 
-    Output: empty stack (Stack)
-    """
-    return []
+        Output: True if stack is empty, False otherwise (bool)
+        """
+        return self.items == []
 
-def is_empty(st):
-    """
-    Determine whether the given stack is empty
-    Input:
-        st (Stack): the stack
+    def push(self, item):
+        """
+        Puts an item on the top of the stack.
 
-    Output: True if stack is empty, False otherwise (bool)
-    """
-    return st == []
+        Input:
+            item (Any): an item
+        """
+        self.items.append(item)
 
-def push(st, item):
-    """
-    Puts an item on the top of the stack.
+    def pop(self):
+        """
+        Removes the item on the top of the stack and produces it.
 
-    Input:
-        st (Stack): the stack
-        item (Any): an item
-
-    Output: None
-    """
-    st.append(item)
-
-def pop(st):
-    """
-    Removes the item on the top of the stack and produces it.
-
-    Input:
-        st (Stack): the stack
-
-    Output: the item on the top of the stack (Any)
-    """
-    return st.pop()
+        Output: the item on the top of the stack (Any)
+        """
+        return self.items.pop()
