@@ -1,7 +1,10 @@
 class Stack:
+    """
+    A collection of items with controlled last in, first out access.
+    """
     def __init__(self):
         """
-        Creates an empty stack.
+        Initializes an empty stack.
         """
         self.items = []
 
@@ -15,7 +18,7 @@ class Stack:
 
     def push(self, item):
         """
-        Puts an item on the top of the stack.
+        Puts an item on the top of this stack.
 
         Input:
             item (Any): an item
@@ -24,7 +27,7 @@ class Stack:
 
     def pop(self):
         """
-        Removes the item on the top of the stack and produces it.
+        Removes the item on the top of this stack and produces it.
 
         Output: the item on the top of the stack (Any)
         """
