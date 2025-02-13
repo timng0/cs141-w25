@@ -6,7 +6,7 @@ class Stack:
         """
         Initializes an empty stack.
         """
-        self.items = []
+        self.__items = []
 
     def is_empty(self):
         """
@@ -14,7 +14,7 @@ class Stack:
 
         Output: True if stack is empty, False otherwise (bool)
         """
-        return self.items == []
+        return self.__items == []
 
     def push(self, item):
         """
@@ -23,7 +23,7 @@ class Stack:
         Input:
             item (Any): an item
         """
-        self.items.append(item)
+        self.__items.append(item)
 
     def pop(self):
         """
@@ -31,4 +31,19 @@ class Stack:
 
         Output: the item on the top of the stack (Any)
         """
-        return self.items.pop()
+        return self.__items.pop()
+
+    def __len__(self):
+        return len(self.__items)
+
+    def __repr__(self):
+        return f'Stack: {self.__items}'
+
+    def __str__(self):
+        vals = []
+        for item in self.__items:
+            vals.append(str(item))
+        return f'Stack: {", ".join(vals)} (Top)'
+
+    def __eq__(self, other):
+        return self.__items == other.__items
