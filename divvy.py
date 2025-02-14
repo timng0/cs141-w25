@@ -68,7 +68,7 @@ class DivvyTrip:
         Internal string representation for DivvyTrip
         """
         return (f"<DivvyTrip: trip_id={self.trip_id},"
-                f" from_station={self.from_station.station_id}",
+                f" from_station={self.from_station.station_id},"
                 f" to_station={self.to_station.station_id}>")
 
     def __str__(self):
@@ -81,3 +81,108 @@ class DivvyTrip:
 
                  
 
+
+
+
+
+def station_dict_to_object(station_dicts):
+    """
+    Converts a list of Divvy station dictionaries into DivvyStations.
+
+    Input:
+        station_dicts (list[dict[str,Any]]): list of dictionaries
+
+    Output (dict[int,DivvyStation]): dictionary mapping station IDs
+        to DivvyStations
+    """
+    stations = {}
+    for station in station_dicts:
+        st_id = int(station['id'])
+        name = station['name']
+        docks = int(station['total_docks'])
+        lat = float(station['latitude'])
+        lon = float(station['longitude'])
+        stations[st_id] = DivvyStation(st_id, name, docks, lat, lon)
+    return stations
+
+
+
+
+def trip_dict_to_object(trip_dicts, stations):
+    """
+    Converts a list of Divvy trip dictionaries into DivvyTrips.
+
+    Input:
+        trip_dicts (list[dict[str,Any]]): list of dictionaries
+
+    Output (list[DivvyTrip]): list of DivvyTrips
+    """
+    trips = []
+    for trip in trip_dicts:
+        trip_id = int(trip['trip_id'])
+        start = datetime.strptime(trip['starttime'], '%m/%d/%Y %I:%M:%S %p')
+        stop = datetime.strptime(trip['stoptime'], '%m/%d/%Y %I:%M:%S %p')
+        bike_id = int(trip['bikeid'])
+        duration = int(trip['tripduration'])
+        from_station = int(trip['from_station_id'])
+        to_station = int(trip['to_station_id'])
+        user = trip['usertype']
+        trips.append(DivvyTrip(trip_id, start, stop, bike_id, duration, stations[from_station], stations[to_station], user))
+    return trips
+
+
+
+class Location:
+    """
+    Represents a geographic location
+    """
+
+    def __init__(self, latitude, longitude):
+        """
+        Constructor
+
+        Inputs:
+        - latitude, longitude [float]: The coordinates for
+          this location.
+        """
+        self.latitude = latitude
+        self.longitude = longitude
+
+
+    def __str__(self):
+        """
+        Human-friendly string representation of Location
+        """
+        lat = 'S' if (self.latitude < 0.0) else 'N'
+        lon = 'W' if (self.longitude < 0.0) else 'E'
+        return (f"({self.latitude:.3f} {lat},"
+                f" {self.longitude:.3f} {lon})")
+
+    def __repr__(self):
+        """
+        Internal string representation of Location.
+        """
+        return f"Location({self.latitude}, {self.longitude})"
+
+    def distance_to(self, other):
+        """
+        Computes the distance to another location using the
+        Haversine Formula
+
+        Inputs:
+        - other: [Location object] Another location
+
+        Returns [float]: the distance to the other location
+        """
+        # print("self: ", self)
+        # print("other:", other)
+        diffLatitude = math.radians(other.latitude - self.latitude)
+        diffLongitude = math.radians(other.longitude - self.longitude)
+
+        a = math.sin(diffLatitude/2) * math.sin(diffLatitude/2) + \
+            math.cos(math.radians(self.latitude)) * \
+            math.cos(math.radians(other.latitude)) * \
+            math.sin(diffLongitude/2) * math.sin(diffLongitude/2)
+        d = 2 * math.asin(math.sqrt(a))
+
+        return 6371000.0 * d
