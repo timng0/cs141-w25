@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 
 class DivvyStation:
     """
@@ -20,6 +21,20 @@ class DivvyStation:
         self.docks = docks
         self.lat = lat
         self.lon = lon
+
+    def distance_to(self, other):
+        diffLatitude = math.radians(other.lat - self.lat)
+        diffLongitude = math.radians(other.lon - self.lon)
+
+        a = math.sin(diffLatitude/2) * math.sin(diffLatitude/2) + \
+            math.cos(math.radians(self.lat)) * \
+            math.cos(math.radians(other.lat)) * \
+            math.sin(diffLongitude/2) * math.sin(diffLongitude/2)
+        d = 2 * math.asin(math.sqrt(a))
+
+        return 6371000.0 * d
+
+
 
     def __repr__(self):
         """
@@ -63,6 +78,9 @@ class DivvyTrip:
         self.to_station = to_station
         self.usertype = usertype
 
+    def trip_distance(self):
+        return self.from_station.distance_to(self.to_station)
+
     def __repr__(self):
         """
         Internal string representation for DivvyTrip
@@ -97,12 +115,12 @@ def station_dict_to_object(station_dicts):
     """
     stations = {}
     for station in station_dicts:
-        st_id = int(station['id'])
+        station_id = int(station['id'])
         name = station['name']
         docks = int(station['total_docks'])
         lat = float(station['latitude'])
         lon = float(station['longitude'])
-        stations[st_id] = DivvyStation(st_id, name, docks, lat, lon)
+        stations[station_id] = DivvyStation(station_id, name, docks, lat, lon)
     return stations
 
 
@@ -120,14 +138,15 @@ def trip_dict_to_object(trip_dicts, stations):
     trips = []
     for trip in trip_dicts:
         trip_id = int(trip['trip_id'])
-        start = datetime.strptime(trip['starttime'], '%m/%d/%Y %I:%M:%S %p')
-        stop = datetime.strptime(trip['stoptime'], '%m/%d/%Y %I:%M:%S %p')
+        starttime = datetime.strptime(trip['starttime'], '%m/%d/%Y %I:%M:%S %p')
+        stoptime = datetime.strptime(trip['stoptime'], '%m/%d/%Y %I:%M:%S %p')
         bike_id = int(trip['bikeid'])
         duration = int(trip['tripduration'])
-        from_station = int(trip['from_station_id'])
-        to_station = int(trip['to_station_id'])
+        from_station = stations[int(trip['from_station_id'])]
+        to_station = stations[int(trip['to_station_id'])]
         user = trip['usertype']
-        trips.append(DivvyTrip(trip_id, start, stop, bike_id, duration, stations[from_station], stations[to_station], user))
+        trips.append(DivvyTrip(trip_id, starttime, stoptime, bike_id,
+                               duration, from_station, to_station, user))
     return trips
 
 
