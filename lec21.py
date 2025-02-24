@@ -8,15 +8,15 @@ Today:
     Binary search trees
 """
 
-class Tree:
+class BinarySearchTree:
     """
-    Represents a tree.
+    Represents a binary search tree.
 
     Attributes:
-        value (Any): the value stored in the node, None if tree is empty
-        children (list[Tree] | None): list of subtrees, None if tree is empty
+        value (int): the value stored in the node, None if tree is empty
+        left (BinarySearchTree | None): left subtree
+        right (BinarySearchTree | None): right subtree
     """
-
     def __init__(self, value=None):
         """
         Constructor for Tree
@@ -26,38 +26,34 @@ class Tree:
         """
         self.value = value
         if value is None:
-            self.children = None
+            self.left = None
+            self.right = None
         else:
-            self.children = []
+            self.left = BinarySearchTree()
+            self.right = BinarySearchTree()
 
     def is_empty(self):
         """
         True if tree is empty, False otherwise
         """
-        return (self.value is None and
-                self.children is None)
+        return self.value is None
 
-    def add_child(self, tree):
+    def insert(self, item):
         """
-        Adds a subtree to self. Self must be non-empty.
+        Inserts an item into the BST.
 
         Input:
-            tree (Tree): subtree
-        """
-        assert not self.is_empty() and isinstance(tree, Tree)
-        self.children.append(tree)
-
-    def __len__(self):
-        """
-        Reports the number of nodes in the tree.
+            item (int): item to be inserted
         """
         if self.is_empty():
-            return 0
+            self.value = item
+            self.left = BinarySearchTree()
+            self.right = BinarySearchTree()
         else:
-            count = 1
-            for subtree in self.children:
-                count = count + subtree.__len__()
-            return count
+            if item < self.value:
+                self.left.insert(item)
+            elif item > self.value:
+                self.right.insert(item)
 
     def __contains__(self, item):
         """
@@ -71,17 +67,16 @@ class Tree:
         else:
             if item == self.value:
                 return True
+            elif item < self.value:
+                return self.left.__contains__(item)
             else:
-                for subtree in self.children:
-                    if subtree.__contains__(item):
-                        return True
-                return False
+                return self.right.__contains__(item)
 
     def __repr__(self):
         """
         Internal representation of tree.
         """
         if self.is_empty():
-            return 'Tree()'
+            return 'BinarySearchTree()'
         else:
-            return f'Tree({self.value}, {self.children})'
+            return f'BinarySearchTree({self.value}, {self.left}, {self.right})'
