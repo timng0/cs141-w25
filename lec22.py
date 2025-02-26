@@ -7,6 +7,7 @@ Last class:
 Today:
     Generative recursion
 """
+import textwrap
 
 class BinarySearchTree:
     """
@@ -80,3 +81,69 @@ class BinarySearchTree:
             return 'BinarySearchTree()'
         else:
             return f'BinarySearchTree({self.value}, {self.left}, {self.right})'
+
+    def __print_r(self, prefix, last, vformat, maxdepth):
+        """
+        Recursive method to print out the tree. Should not be
+        called directly. See print() method for more details
+        """
+        if maxdepth is not None:
+            if maxdepth == 0:
+                return
+            else:
+                maxdepth -= 1    
+    
+        if len(prefix) > 0:
+            if last:
+                lprefix1 = prefix[:-3] + u"  └──"
+            else:
+                lprefix1 = prefix[:-3] + u"  ├──"
+        else:
+            lprefix1 = u""
+    
+        if len(prefix) > 0:
+            lprefix2 = prefix[:-3] + u"  │"
+        else:
+            lprefix2 = u""
+    
+        if last:
+            lprefix3 = lprefix2[:-1] + "   "
+        else:
+            lprefix3 = lprefix2 + "  "
+    
+        if not self.is_empty():
+            ltext = (vformat).format(self.value)
+        else:
+            ltext = "EMPTY"
+    
+        ltextlines = textwrap.wrap(ltext, 80, initial_indent=lprefix1, subsequent_indent=lprefix3)
+    
+        print(lprefix2) 
+        print("\n".join(ltextlines))
+    
+        if self.is_empty():
+            return
+        else:
+            for i, st in enumerate([self.left, self.right]):
+                if i == len([self.left, self.right]) - 1:
+                    newprefix = prefix + u"   "
+                    newlast = True
+                else:
+                    newprefix = prefix + u"  │"
+                    newlast = False
+
+                st.__print_r(newprefix, newlast, vformat, maxdepth)
+    
+    
+    def print(self, vformat="{}", maxdepth=None):
+        """
+        Prints out the tree.
+        
+        Parameters:
+        - vformat: Format string for the value
+        - maxdepth: Maximum depth to print
+        """
+        self.__print_r(u"", False, vformat, maxdepth)
+
+    def __str__(self):
+        return 
