@@ -9,6 +9,39 @@ Today:
 """
 import textwrap
 
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+
+def merge(lst1, lst2):
+    """
+    Merge two sorted lists into one big list
+    """
+    if lst1 == []:
+        return lst2
+    elif lst2 == []:
+        return lst1
+    else:
+        first1, *rest1 = lst1
+        first2, *rest2 = lst2
+        if first1 < first2:
+            return [first1] + merge(rest1, lst2)
+        else:
+            return [first2] + merge(lst1, rest2)
+
+def sort(lst):
+    if lst == []:
+        return lst
+    elif len(lst) == 1:
+        return lst
+    else:
+        mid = len(lst) // 2
+        left = sort(lst[:mid])
+        right = sort(lst[mid:])
+        return merge(left, right)
+
 class BinarySearchTree:
     """
     Represents a binary search tree.
@@ -145,5 +178,3 @@ class BinarySearchTree:
         """
         self.__print_r(u"", False, vformat, maxdepth)
 
-    def __str__(self):
-        return 
