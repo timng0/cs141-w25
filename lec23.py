@@ -13,6 +13,19 @@ Today:
 """
 import textwrap
 
+def binary_search(lst, item):
+    print(lst)
+    if lst == []:
+        return False
+    else:
+        mid = len(lst) // 2
+        if item == lst[mid]:
+            return True
+        elif item < lst[mid]:
+            return binary_search(lst[:mid], item)
+        else:
+            return binary_search(lst[mid+1:], item)
+
 def gcd(a, b):
     if b == 0:
         return a
