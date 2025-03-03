@@ -12,88 +12,18 @@ Today:
     Exceptions
 """
 
-def binary_search(lst, item):
-    if lst == []:
+def _binary_search(lst, item, start, end):
+    if start >= end:
         return False
     else:
-        mid = len(lst) // 2
+        mid = (start + end) // 2
         if item == lst[mid]:
             return True
         elif item < lst[mid]:
-            return binary_search(lst[:mid], item)
+            return _binary_search(lst, item, start, mid)
         else:
-            return binary_search(lst[mid+1:], item)
+            return _binary_search(lst, item, mid + 1, end)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def foo(x, y):
-
-    raise NotImplementedError("To be completed.")
-
-    if y == 0:
-        return x / y
-    if y == 1:
-        return x / u
-    d = {}
-    x = d["a"]
-
-def bar(y):
-    try:
-        foo(4, y)
-    except ZeroDivisionError:
-        print("Tried to divide by zero, caught in bar")
-    finally:
-        print("Running finally code in bar")
-    print("After try block in bar")
-    print()
-
-def baz(y):
-    try:
-        bar(y)
-    except NameError as e:
-        print("Ran into a name error,", e)
-    except ZeroDivisionError:
-        print("Tried to divide by zero, caught in baz")
-    finally:
-        print("Running finally code in baz")
-    print("After try block in baz")
+def binary_search(lst, item):
+    return _binary_search(lst, item, 0, len(lst))
