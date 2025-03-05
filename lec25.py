@@ -10,59 +10,10 @@ Today
     Creating exceptions
 """
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class MyError(Exception):
+    pass
 
 def foo(x, y):
-    raise NotImplementedError("To be completed.")
-
     if y == 0:
         return x / y
     if y == 1:
