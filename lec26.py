@@ -11,10 +11,9 @@ Today:
 
 def fun(lst):
     if lst == []:
-        asdf
-    else:
-        first, *rest = lst
-        fjeiowajfeowai
+        return 
+    first, *rest = lst
+    fjeiowajfeowai
 
 def fun(lst):
     match lst:
@@ -26,6 +25,7 @@ def fun(lst):
 match tree:
     case Terminal(a):
         a 
+    case Variable(v, []):
     case Variable(v, subtrees):
         v
         subtreses
